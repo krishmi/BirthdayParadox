@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Birthday Paradox</title>
+		<style>
+			*
+			{
+				margin:0;
+				padding:0;
+				overflow: hidden;
+			}
+			body
+			{
+				background-image:url('beautiful-blooming-bridal-1702373.jpg');
+				background-repeat:no-repeat;
+				background-size:cover;
+			}
+			html,body,div
+			{
+				height:100%;
+				width: 100%;
+			}
+			div
+			{
+				display: inline-block;
+			}
+			.overlay
+			{
+				background-color:rgba(0,0,0,0.8);
+			}
+			p
+			{	
+				color: white;
+				font-size: 70px;
+			}
+			a,a:hover
+			{
+				color: white;
+			}
+			#num
+			{
+				width:280px;
+				height: 4%;
+				border-radius: 10px;
+				margin-left:38%;
+				margin-top:15%;
+				padding-left: 10px;
+			}
+			#cover
+			{
+				width: 50%;
+				display: none;
+			}
+			#constant
+			{
+				overflow: auto;
+				height: 75%;
+			}
+			#dateList
+			{
+				color: white;
+				background-color: rgba(0,0,0,.9);
+				border-radius: 10px;
+				width: 60%;
+				height: 70%;
+				margin: 10%;
+				padding: 5%;
+			}
+			#dateList li
+			{
+				margin: 5%;
+				font-size: 20px;
+				margin-left:10%;
+				border-radius: 5px;
+				background-color: white;
+				color: black;
+				padding-left: 40%;
+			}
+			button
+			{
+				width:10%;
+				height: 4%;
+				border-radius: 10px;
+				margin-left:45%;
+				margin-top:5%;
+				background-color: green;
+				color: white;
+			}
+			.match
+			{
+				width: 20%;
+				margin: 10%;
+				height: 8%;
+				background-color: red;
+			}
+			span
+			{
+				width: 10%;
+				height: 8%;
+			}
+		</style>
+		 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>  
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>  
+   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script> 
+
+		<script type="text/javascript">
+			function random() {
+			  var list=[];
+			  var flag=false;
+			  var index;
+			  var num=document.getElementById('num').value;
+			  if(!(/[0-9]+/.test(num)))
+			  {
+			  	alert('Input must be a positive integer');
+			  	return;
+			  }
+			  var div=document.getElementById('dateList');
+			  var start = new Date(2013,01,01);
+			  var end = new Date(2013,12,31);
+
+			  var str="<button id='matched' class='match'>Matched</button><span></span><button id='nmatched' class='match'>Not matched</button><div id='constant'><ul>";
+			  for(var i=0;i<num;++i)
+			  {	
+			  		var date = new Date(+start + Math.random() * (end - start));
+			  		var x=$.datepicker.formatDate("dd/mm",date);
+			  		str+="<li>"+x+"</li>";
+			  		if(list.indexOf(x)!=-1)
+			  		{
+			  			flag=true;
+			  			index=list.indexOf(x);
+			  			list[i]=x;
+			  			break;
+			  		}
+			  		list[i]=x;
+			  }
+			  str+="</ul></div>";
+			  $('#left').animate({width:"50%"},'slow');
+			  $('#num').animate({marginTop:"40%",marginLeft:"30%"},'slow');
+			  $('#cover').show();
+			  div.innerHTML=str;
+			  num=(1-Math.exp(-(num*num)/(2*365)))*100;
+			  document.getElementsByTagName('span')[0].innerHTML=num.toFixed(2)+"%";
+			  if(flag)
+			  {
+			  	document.getElementById('matched').style.backgroundColor='green';
+			  	document.getElementsByTagName('ul')[0].children[index].style.backgroundColor='green';
+			  	document.getElementsByTagName('ul')[0].children[i].style.backgroundColor='green';
+			  }
+			  else
+			  	document.getElementById('nmatched').style.backgroundColor='green';
+
+			}
+		</script>
+	</head>
+	<body >
+			<div id="left" class="overlay">
+				<p style="display: inline;">Birthday Paradox</p>
+				<a href="https://www.geeksforgeeks.org/birthday-paradox/" target="
+				_blank">Read more</a>
+				<input type="text" id="num"/>
+				<br/>
+				<button onclick="random()">Go</button>
+			</div><!--
+			--><div id="cover">
+				<div id="dateList">
+					
+				</div>
+			</div>
+	</body>
+</html>
